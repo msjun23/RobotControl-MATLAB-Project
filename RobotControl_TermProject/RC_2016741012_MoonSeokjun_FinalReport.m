@@ -136,6 +136,185 @@ sh1 = simplify(eval(h1));
 sh2 = simplify(eval(h2));
 
 %% Gravity term
+n = 2;
+syms r1 r2 Iz1 Iz2
+syms g
+r11 = [-(L1-r1); 0; 0; 1];
+r22 = [-(L2-r2); 0; 0; 1];
+gv = [0 -g 0 0];
+
+G1 = -(m1 * gv * U11 * r11 + ...        % i=1, j=1
+       m2 * gv * U21 * r22);            % i=1, j=2
+G2 = -(m2 * gv * U22 * r22);            % i=2, j=2
+G = simplify([G1; G2]);
+
+%%
+L2 = L1;
+
+r1 = L1 / 2;
+r2 = L2 / 2;
+Iz1 = 1/3 * m1 * L1^2;
+Iz2 = 1/3 * m2 * L2^2;
+
+sM = simplify(eval(M));
+
+sh1 = simplify(eval(h1));
+sh2 = simplify(eval(h2));
+sh = [sh1; sh2];
+
+sg1 = simplify(eval(G1));
+sg2 = simplify(eval(G2));
+sg = [sg1; sg2];
+
+%%
+% [tau1; tau2] = M * [ddth1; ddth2] + h + G;
+% [ddth1; ddth2] = inv(M) * ([tau1; tau2] - h - G);
+
+syms tau1 tau2
+DDTH = inv(M) * ([tau1; tau2] - h - G);
+% DDTH1 = M\([tau1; tau2] - h - G);     -> same inverse matrix result
+
+%%
+dydt = simplify([dth1; DDTH(1); dth2; DDTH(2)]);
+% matlabFunction(dydt, 'file', 'two_link.m', 'Optimize', false);
+
+%% 2-DOF Simulation
+clear all
+close all
+global Iz1 Iz2 L1 L2 g m1 m2 r1 r2 tau1 tau2
+
+L1 = 0.5; L2 = 0.5; L3 = 0.5;
+r1 = 0.1; r2 = 0.1; r3 = 0.1;
+m1 = 0.2; m2 = 0.2; m3 = 0.2;
+Iz1 = 0.05; Iz2 = 0.05; Iz3 = 0.05;
+
+g = 9.806;
+
+dt = 0.005; ft = 5;
+q1 = -pi/2; dq1 = 0;
+q2 = pi/2; dq2 = 0;
+
+data = [];
+n = 1;
+
+FG = figure('Color', [1 1 1]);
+AX = axes('parent', FG);
+hold on;
+grid on;
+axis([-1.5 1.5 -1.5 1.5]);
+
+x1 = L1*cos(q1);
+y1 = L1*sin(q1);
+Px1 = [0, x1];
+Py1 = [0, y1];
+
+x2 = L2*cos(q1+q2);
+y2 = L2*sin(q1+q2);
+Px2 = [x1, x1+x2];
+Py2 = [y1, y1+y2];
+
+p1 = plot(Px1, Py1, '-ob', 'Linewidth', 3);
+p2 = plot(Px2, Py2, '-or', 'Linewidth', 3);
+
+%% ode45
+for cnt=0:dt:ft
+    tau1 = -dq1*1;
+    tau2 = -dq2*1;
+    
+    [t,y] = ode45('two_link', [0 dt], [q1; dq1; q2; dq2]);
+    
+    index = length(y);
+    
+    q1 = y(index, 1);
+    dq1 = y(index, 2);
+    q2 = y(index, 3);
+    dq2 = y(index, 4);
+    
+    x1 = L1*cos(q1);
+    y1 = L1*sin(q1);
+    Px1 = [0, x1];
+    Py1 = [0, y1];
+    
+    x2 = L2*cos(q1+q2);
+    y2 = L2*sin(q1+q2);
+    Px2 = [x1, x1+x2];
+    Py2 = [y1, y1+y2];
+    
+    n = n + 1;
+    cmd = sprintf("Time: %2.2f", cnt);
+    clc
+    disp(cmd);
+    
+    if rem(n, 10) == 0
+        set(p1, 'XData', Px1, 'YData', Py1);
+        set(p2, 'XData', Px2, 'YData', Py2);
+        drawnow
+    end
+end
+
+
+
+
+%% 1-DOF Simulation
+% global m l g u;
+% 
+% dt = 0.005; ft = 5;
+% q = pi/4; dq = 0;
+% data = [];
+% 
+% m = 1; l = 1; g = 9.8148; n =1; u = 0;
+% 
+% FG = figure('Color', [1 1 1]);
+% AX = axes('parent', FG);
+% hold on;
+% grid on;
+% axis([-1.5 1.5 -1.5 1.5]);
+% 
+% Px = [0, 1];
+% Py = [0, 0];
+% 
+% p = plot(Px, Py, '-ob', 'Linewidth', 3);
+% 
+% %% ODE45
+% for cnt=0:dt:ft
+%     [t,y] = ode45('one_link', [0 dt], [q; dq]);
+%     
+%     index = length(y);
+%     
+%     q = y(index, 1);
+%     dq = y(index, 2);
+%     
+%     x = l*sin(q);
+%     y = -l*cos(q);
+%     Px = [0 x];
+%     Py = [0 y];
+%     
+%     data(n,1) = cnt;
+%     data(n,2) = q;
+%     data(n,3) = dq;
+%     n = n + 1;
+%     
+%     cmd = sprintf("Time: %2.2f", cnt);
+%     clc
+%     disp(cmd);
+%     
+%     if rem(n, 10) == 0
+%         set(p, 'XData', Px, 'YData', Py);
+%         drawnow
+%     end
+% end
+% 
+% %%
+% FG2 = figure('Color', [1 1 1]);
+% AX2 = axes('parent', FG2);
+% grid on;
+% 
+% plot(data(:,1), data(:,2), 'r');
+% hold on;
+% plot(data(:,1), data(:,3), 'b');
+
+
+
 
 
 
