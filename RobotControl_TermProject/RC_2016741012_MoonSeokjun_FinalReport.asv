@@ -171,8 +171,10 @@ sg = [sg1; sg2];
 
 syms tau1 tau2
 DDTH = inv(M) * ([tau1; tau2] - h - G);
+ddth1 = DDTH(1);
+ddth2 = DDTH(2);
 % DDTH = M\([tau1; tau2] - h - G);     -> same inverse matrix result
 
-%% Define two_link.m function
-dydt = simplify([dth1; DDTH(1); dth2; DDTH(2)]);
+%%
+dydt = simplify([dth1; ddth1; dth2; ]);
 %matlabFunction(dydt, 'file', 'two_link.m', 'Optimize', false);
