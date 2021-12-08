@@ -1,11 +1,11 @@
 %% 1-DOF Simulation
-global m l g u;
+global m I g u;
 
 dt = 0.005; ft = 5;
 q = pi/4; dq = 0;
 data = [];
 
-m = 1; l = 1; g = 9.8148; n =1; u = 0;
+m = 1; I = 1; g = 9.8148; n =1; u = 0;
 
 FG = figure('Color', [1 1 1]);
 AX = axes('parent', FG);
@@ -20,15 +20,15 @@ p = plot(Px, Py, '-ob', 'Linewidth', 3);
 
 %% ODE45
 for cnt=0:dt:ft
-    [t,y] = ode45('one_link', [0 dt], [q; dq]);
+    [t,y] = ode45('one_link_ex', [0 dt], [q; dq]);
     
     index = length(y);
     
     q = y(index, 1);
     dq = y(index, 2);
     
-    x = l*sin(q);
-    y = -l*cos(q);
+    x = I*sin(q);
+    y = -I*cos(q);
     Px = [0 x];
     Py = [0 y];
     
