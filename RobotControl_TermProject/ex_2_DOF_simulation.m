@@ -45,7 +45,6 @@ for cnt=0:dt:ft
     tau2 = 0;
     
     [t,y] = ode45('two_link', [0 dt], [q1; dq1; q2; dq2]);
-    
     index = length(y);
     
     q1 = y(index, 1);
