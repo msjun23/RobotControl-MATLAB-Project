@@ -1,3 +1,8 @@
+%%
+clc
+clear all
+close all
+
 %% 1-DOF Simulation
 global m I g u;
 

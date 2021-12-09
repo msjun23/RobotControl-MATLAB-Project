@@ -1,6 +1,9 @@
-%% 2-DOF Simulation
+%%
+clc
 clear all
 close all
+
+%% 2-DOF Simulation
 global Iz1 Iz2 L1 L2 g m1 m2 r1 r2 tau1 tau2
 
 L1 = 0.5; L2 = 0.5; L3 = 0.5;
