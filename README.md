@@ -13,6 +13,8 @@ Code is [here](https://github.com/msjun23/RobotControl-MATLAB-Project/blob/main/
 
 ![HW1_3_DOF_simulation](/images/HW1_3_DOF_simulation.gif)
 
+<img src="/images/HW1_3_DOF_simulation.gif" width="50%" height="50%"/>
+
 ---
 
 # 2. 2-DOF Dynamics parameter estimation
