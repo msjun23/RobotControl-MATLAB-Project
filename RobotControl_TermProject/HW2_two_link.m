@@ -15,9 +15,9 @@ G = [-m1*r1*g*cos(q1)-m2*L1*g*cos(q1)-m2*r2*g*cos(q1+q2);
 d = [Fs1*sign(dq1)+Fv1*dq1;
      Fs2*sign(dq2)+Fv2*dq2];
 
-ddy = inv(M)*([tau1; tau2] - C*[dq1; dq2] - G - d);
+ddq = inv(M)*([tau1; tau2] - C*[dq1; dq2] - G - d);
 
-% ddy = [(tau1 + (m1*r1+m2*L1)*g*cos(q1)+(m2*r2)*g*cos(q1+q2)-Fs1*sign(dq1)-Fv1*dq1) / (I1+Im1);
+% ddq = [(tau1 + (m1*r1+m2*L1)*g*cos(q1)+(m2*r2)*g*cos(q1+q2)-Fs1*sign(dq1)-Fv1*dq1) / (I1+Im1);
 %        (tau2 - (m2*r2*L1)*sin(q2)*(dq1+dq2)*dq1+(m2*r2)*g*cos(q1+q2)-Fs2*sign(dq2)-Fv2*dq2) / (I2+Im2)];
 
-dydt = [dq1; dq2; ddy];
+dydt = [dq1; ddq(1); dq2; ddq(2)];

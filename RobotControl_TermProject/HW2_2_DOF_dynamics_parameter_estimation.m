@@ -18,7 +18,7 @@ Fs1 = 0.1;	Fs2 = 0.1;
 Fv1 = 0.1;	Fv2 = 0.1;
 
 q1 = pi/4;  dq1 = 0;
-q2 = -pi/4; dq2=0;
+q2 = pi/4; dq2=0;
 
 W1_int = [0 0 0 0 0 0 0 0 0 0;
           0 0 0 0 0 0 0 0 0 0];
@@ -45,8 +45,8 @@ for cnt=0:dt:ft
     index = length(y);
     
     q1 = y(index, 1);
-    q2 = y(index, 2);
-    dq1 = y(index, 3);
+    dq1 = y(index, 2);
+    q2 = y(index, 3);
     dq2 = y(index, 4);
     
     % W1 integration
@@ -58,14 +58,14 @@ for cnt=0:dt:ft
     u = u + [tau1; tau2]*dt;    % (2x1)
     
     % Kalman Filter based parameter estimation algorithm
-%     P = P - P*Y.'*inv(eye(1) + Y*P*Y.')*Y*P;    % (10x10)
-%     K = P*Y.';                  % (10x2)
-%     theta = theta + K*(u - Y*theta);
+    P = P - P*Y.'*inv(eye(2) + Y*P*Y.')*Y*P;    % (10x10)
+    K = P*Y.';                                  % (10x1)
+    theta = theta + K*(u - Y*theta);            % (10x1)
     
     % Error minimization
     temp = temp + Y.'*Y;
     temp2 = temp2 + Y.'*u;
-    theta = temp\temp2;
+    theta = inv(temp)*temp2;
     
     time(n,:) = cnt;
     data(n,:) = theta;
@@ -80,18 +80,18 @@ end
 FG = figure('Color', [1 1 1]);
 AX = axes('parent', FG);
 
-plot(time(:,1), data(:,1), 'r', 'linew', 2);
+plot(time(:,1), data(:,1), 'k', 'linew', 2);
 grid on;
 hold on;
-plot(time(:,1), data(:,2), 'g', 'linew', 2);
-plot(time(:,1), data(:,3), 'b', 'linew', 2);
-plot(time(:,1), data(:,4), 'c', 'linew', 2);
-plot(time(:,1), data(:,5), 'm', 'linew', 2);
-plot(time(:,1), data(:,6), 'y', 'linew', 2);
-plot(time(:,1), data(:,7), 'k', 'linew', 2);
-plot(time(:,1), data(:,8), 'r', 'linew', 2);
-plot(time(:,1), data(:,9), 'g', 'linew', 2);
-plot(time(:,1), data(:,10), 'b', 'linew', 2);
+plot(time(:,1), data(:,2), 'r', 'linew', 2);
+plot(time(:,1), data(:,3), 'g', 'linew', 2);
+plot(time(:,1), data(:,4), 'b', 'linew', 2);
+plot(time(:,1), data(:,5), 'y', 'linew', 2);
+plot(time(:,1), data(:,6), '--k', 'linew', 2);
+plot(time(:,1), data(:,7), 'c', 'linew', 2);
+plot(time(:,1), data(:,8), '--c', 'linew', 2);
+plot(time(:,1), data(:,9), 'm', 'linew', 2);
+plot(time(:,1), data(:,10), '--m', 'linew', 2);
 
 xlabel('time', 'fontsize', 15);
 ylabel('parameter', 'fontsize', 15);

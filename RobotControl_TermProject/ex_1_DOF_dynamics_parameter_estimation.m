@@ -30,6 +30,9 @@ n = 1;
 %% Simulation
 % Simulation time
 dt = 0.005; ft = 5;
+
+temp = zeros(4,4);
+temp2 = zeros(4,1);
 for cnt=0:dt:ft
     tau = sin(cnt) + cos(10*cnt);
     
@@ -42,13 +45,18 @@ for cnt=0:dt:ft
     % W1 integration
     W1_int = W1_int + [0 -g*sin(q) -sign(dq) -dq]*dt;
     W2 = [dq 0 0 0];
-    Y = W2 - W1_int;
-    u = u + tau*dt;
+    Y = W2 - W1_int;    % (1,4)
+    u = u + tau*dt;     % (1x1)
     
     % Kalman Filter based parameter estimation algorithm
-    P = P - P*Y.'*inv(eye(1) + Y*P*Y.')*Y*P;
-    K = P*Y.';
-    theta = theta + K*(u - Y*theta);
+    P = P - P*Y.'*inv(eye(1) + Y*P*Y.')*Y*P;    % (4x4)
+    K = P*Y.';                                  % (4x1)
+    theta = theta + K*(u - Y*theta);            % (4x1)
+    
+    % Error minimization
+%     temp = temp + Y.'*Y;
+%     temp2 = temp2 + Y.'*u;
+%     theta = inv(temp)*temp2;
     
     time(n,:) = cnt;
     data(n,:) = theta;
@@ -72,4 +80,4 @@ plot(time(:,1), data(:,4), 'k', 'linew', 2);
 
 xlabel('time', 'fontsize', 15);
 ylabel('parameter', 'fontsize', 15);
-legend({'I + Im', 'm * r', 'Fs', 'Fv'}, 'Location', 'southeast');
+legend({'I+Im=0.1', 'mr=0.1', 'Fs=0.1', 'Fv=0.1'}, 'Location', 'southeast');
