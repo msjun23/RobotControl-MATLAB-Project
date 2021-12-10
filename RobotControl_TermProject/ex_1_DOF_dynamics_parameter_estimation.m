@@ -1,8 +1,9 @@
-%% Dynamics parameter estimation
+%%
 clc
 clear all
 close all
 
+%% Dynamics parameter estimation
 syms q dq ddq
 
 global I Im m g r Fs Fv tau
@@ -15,7 +16,6 @@ g = 9.806;
 Fs = 0.1;
 Fv = 0.1;
 
-dt = 0.002; ft = 5;
 q = pi/4; dq = 0;
 
 W1_int = [0 0 0 0];
@@ -27,6 +27,9 @@ data = [];
 time = [];
 n = 1;
 
+%% Simulation
+% Simulation time
+dt = 0.005; ft = 5;
 for cnt=0:dt:ft
     tau = sin(cnt) + cos(10*cnt);
     
@@ -36,11 +39,13 @@ for cnt=0:dt:ft
     q = y(index, 1);
     dq = y(index, 2);
     
-    % Kalman Filter based parameter estimation algorithm
+    % W1 integration
     W1_int = W1_int + [0 -g*sin(q) -sign(dq) -dq]*dt;
     W2 = [dq 0 0 0];
     Y = W2 - W1_int;
     u = u + tau*dt;
+    
+    % Kalman Filter based parameter estimation algorithm
     P = P - P*Y.'*inv(eye(1) + Y*P*Y.')*Y*P;
     K = P*Y.';
     theta = theta + K*(u - Y*theta);
@@ -48,6 +53,10 @@ for cnt=0:dt:ft
     time(n,:) = cnt;
     data(n,:) = theta;
     n = n + 1;
+    
+    cmd = sprintf("Time: %2.2f", cnt);
+    clc
+    disp(cmd);
 end
 
 %% Plot
