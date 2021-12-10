@@ -29,4 +29,4 @@ You can see that every parameters are converge quickly without large overshoot. 
 ![2-DOF_dynamics_estimation_minimization_algorithm](/images/2-DOF_dynamics_estimation_minimization_algorithm.png) | ![2-DOF_dynamics_estimation_minimization_algorithm2](/images/2-DOF_dynamics_estimation_minimization_algorithm2.png)
 ---|---|
 
-Every parameters are converge very quickly than Kalman algorithm and error is almost zero. But in the beginning, very big overshoot exist.
+Every parameters are converge very quickly than Kalman algorithm and error is almost zero. But in the beginning, very big overshoot exists.
