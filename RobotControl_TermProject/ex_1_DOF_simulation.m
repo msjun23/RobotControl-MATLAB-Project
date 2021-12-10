@@ -4,13 +4,13 @@ clear all
 close all
 
 %% 1-DOF Simulation
-global m I g u;
+global m L g tau;
 
 dt = 0.005; ft = 5;
 q = pi/4; dq = 0;
 data = [];
 
-m = 1; I = 1; g = 9.8148; n =1; u = 0;
+m = 1; L = 1; g = 9.8148; n =1; tau = 0;
 
 FG = figure('Color', [1 1 1]);
 AX = axes('parent', FG);
@@ -32,8 +32,8 @@ for cnt=0:dt:ft
     q = y(index, 1);
     dq = y(index, 2);
     
-    x = I*sin(q);
-    y = -I*cos(q);
+    x = L*sin(q);
+    y = -L*cos(q);
     Px = [0 x];
     Py = [0 y];
     
@@ -60,3 +60,4 @@ grid on;
 plot(data(:,1), data(:,2), 'r');
 hold on;
 plot(data(:,1), data(:,3), 'b');
+grid on;

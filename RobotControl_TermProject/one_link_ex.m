@@ -1,5 +1,5 @@
 %% Define
 function dydt = one_link_ex(t, y)
-global m I g u;
+global m L g tau;
 
-dydt = [y(2); -g/I*sin(y(1)) + u/m/I/I];
+dydt = [y(2); -g/L*sin(y(1)) + tau/m/L/L];
