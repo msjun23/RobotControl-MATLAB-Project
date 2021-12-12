@@ -1,5 +1,5 @@
 %% Define
-function D = GetInertia(q1, q2)
+function D = GetInertia_two_link(q1, q2)
 global L1 L2 m1 m2 r1 r2 Iz1 Iz2
 
 %% DH Parameter, Tranformation matrix

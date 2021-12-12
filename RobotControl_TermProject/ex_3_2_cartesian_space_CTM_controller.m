@@ -31,7 +31,7 @@ init_dq1 = 0.00;    init_dq2 = 0.00;    % [rad/s], init angular velocity
 q = [init_q1; init_q2];                 % [rad], init joint angle
 dq = [init_dq1; init_dq2];              % [rad/s], init angular velocity
 
-init_X = GetKinematics(q(1), q(2));     % [m], init end-effector position, (2x1)
+init_X = GetKinematics_two_link(q(1), q(2));     % [m], init end-effector position, (2x1)
 X = init_X;                             % [m], current position
 dX = [0; 0];                            % [m], current Velocity
 X_d = init_X;                           % [m], target end-effector position
@@ -76,14 +76,14 @@ if (flag_sim == 1)
             ddX_d = (dX_d - [sim_dX_x_d(n-1); sim_dX_y_d(n-1)])./dt;
         end
         % Get dynamics
-        J = GetJacobian(q(1), q(2));                % (2x2)
+        J = GetJacobian_two_link(q(1), q(2));                % (2x2)
         dJ = (J - pre_J)/dt;                        % (2x2)
         pre_J = J;
         
-        X = GetKinematics(q(1), q(2));              % (2x1)
+        X = GetKinematics_two_link(q(1), q(2));              % (2x1)
         dX = J*dq;                                  % (2x1)
-        D = GetInertia(q(1), q(2));
-        H = GetCoriolis(q(1), q(2), dq(1), dq(2));
+        D = GetInertia_two_link(q(1), q(2));
+        H = GetCoriolis_two_link(q(1), q(2), dq(1), dq(2));
         G = GetGravity_two_link(q(1), q(2));
         
         % Controller

@@ -1,5 +1,5 @@
 %% Define
-function H = GetCoriolis(q1, q2, dq1, dq2)
+function H = GetCoriolis_two_link(q1, q2, dq1, dq2)
 global L1 L2 m1 m2 r1 r2 Iz1 Iz2
 
 %% DH Parameter, Tranformation matrix

@@ -1,5 +1,5 @@
 %% Define
-function X = GetKinematics(q1, q2)
+function X = GetKinematics_two_link(q1, q2)
 global L1 L2
 
 x = L1*cos(q1) + L2*cos(q1+q2);
