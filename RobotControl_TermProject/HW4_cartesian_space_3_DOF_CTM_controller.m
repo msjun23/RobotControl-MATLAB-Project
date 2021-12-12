@@ -136,7 +136,7 @@ if (flag_draw == 1)
     
     if (flag_draw_robot == 1)
         % save as gif
-        filename = 'HW4_cartesian_sapce_3_DOF_CTM_controller.gif';
+        filename = 'HW4_cartesian_sapce_3_DOF_CTM_PID_controller.gif';
         
         % Draw robot
         x1 = L1*cos(init_q1);               % [m], joint 1 X-axis position

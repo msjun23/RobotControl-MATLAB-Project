@@ -132,7 +132,7 @@ if (flag_draw == 1)
     if (flag_draw_robot == 1)
         % Draw robot
         % save as gif
-        filename = 'HW3_2_cartesian_sapce_2_DOF_CTM_controller.gif';
+        filename = 'HW3_2_cartesian_sapce_2_DOF_CTM_PID_controller.gif';
         
         x1 = L1*cos(init_q1);               % [m], joint 1 X-axis position
         y1 = L1*sin(init_q1);               % [m], joint 1 Y-axis position

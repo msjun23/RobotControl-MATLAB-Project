@@ -96,7 +96,7 @@ if (flag_draw == 1)
     if (flag_draw_robot == 1)
         % Draw robot
         % save as gif
-        filename = 'HW3_1_joint_sapce_1_DOF_CTM_controller.gif';
+        filename = 'HW3_1_joint_sapce_1_DOF_CTM_PID_controller.gif';
         
         init_x = L*sin(init_q);
         init_y = -L*cos(init_q);
