@@ -18,8 +18,7 @@ st = 0.000;             % [sec], start time
 dt = 0.005;             % [sec], sampling time
 ft = 6.000;             % [sec], end time
 
-%g = 9.8148;             % [m/s^2], gravitational acceleration
-g = 9.806;
+g = 9.8148;             % [m/s^2], gravitational acceleration
 
 % Robot parameters
 m1 = 0.2;       m2 = 0.2;       % [kg], link mass
