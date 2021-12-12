@@ -26,7 +26,7 @@ L = 1.0000;             % [m], link length
 I = (m*L^2)/3;          % [kgm^2], link inertia
 tau = 0.0000;           % [Nm], control torque
 
-init_q = pi/4;          % [rad], init joint angle
+init_q = 0;          % [rad], init joint angle
 init_dq = 0.00;         % [rad/s], init angular velocity
 q = init_q;             % [rad], current joint angle
 dq = init_dq;           % [rad/s], current angular velocity
@@ -40,7 +40,7 @@ ddq_d = 0;              % [rad/s^2], target angular acceleration
 Wn = 20;                % [rad/s], natural frequency
 Kp = Wn^2;              % [Nm/rad], propotional gain
 Kv = 2*Wn;              % [Nm*s/rad], derivative gain
-Ki = Wn;              % [Nm/rad], integration gain
+Ki = 0;              % [Nm/rad], integration gain
 
 %% Simulation
 if (flag_sim == 1)
@@ -57,7 +57,7 @@ if (flag_sim == 1)
             ddq_d = 0.0;
         else
             if (q_d < 90*pi/180)
-                q_d = q_d + (45/2*pi/180)*dt;
+                q_d = q_d + (30*pi/180)*dt;
             else
                 q_d = 90*pi/180;
             end
@@ -168,7 +168,7 @@ if (flag_draw == 1)
         grid on;
         
         xlabel('time (s)', 'fontsize', font_size_label);
-        ylabel('Angle (deg)', 'fontsize', font_size_label);
+        ylabel('Velocity (deg/s)', 'fontsize', font_size_label);
         title('Joint Space PD CTM Controller', 'fontsize', font_size_title);
         legend('Desired', 'Current');
     end
