@@ -21,12 +21,12 @@ Code is [here](https://github.com/msjun23/RobotControl-MATLAB-Project/blob/main/
 To estimation, two algorithms are available.
 
 ## 2.1 Kalman Filter based parameter estimation algorithm
-<img src="/images/2-DOF_dynamics_estimation_kalman_filter.png" width="50%" height="50%"/>
+<img src="/images/HW2_2-DOF_dynamics_estimation_kalman_filter.png" width="50%" height="50%"/>
 
 You can see that every parameters are converge quickly without large overshoot. But also little errors are exist.
 
 ## 2.2 Error minimization algorithm
-![2-DOF_dynamics_estimation_minimization_algorithm](/images/2-DOF_dynamics_estimation_minimization_algorithm.png) | ![2-DOF_dynamics_estimation_minimization_algorithm2](/images/2-DOF_dynamics_estimation_minimization_algorithm2.png)
+![HW2_2-DOF_dynamics_estimation_minimization_algorithm](/images/HW2_2-DOF_dynamics_estimation_minimization_algorithm.png) | ![HW2_2-DOF_dynamics_estimation_minimization_algorithm2](/images/HW2_2-DOF_dynamics_estimation_minimization_algorithm2.png)
 ---|---|
 
 Every parameters are converge very quickly than Kalman algorithm and error is almost zero. But in the beginning, very big overshoot exists.
