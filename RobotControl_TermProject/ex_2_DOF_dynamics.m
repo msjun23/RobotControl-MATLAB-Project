@@ -4,7 +4,7 @@ clear all
 close all
 
 %% DH Parameter, Tranformation matrix
-syms L1 L2 m1 m2 Ic1 Ic2 Im1 Im2 r1 r2 Iz1 Iz2
+syms L1 L2 m1 m2 r1 r2 Iz1 Iz2
 syms th1 th2 dth1 dth2 ddth1 ddth2
 
 % Inertia of first body
@@ -38,7 +38,7 @@ Qr = [0 -1 0 0;
 Q1 = Qr;
 Q2 = Qr;
 
-dT01t1 = Qr * T01;
+% dT01t1 = Qr * T01;
 % dT01t2 = diff(T01);       <- same result
 
 %% Velocity of a link, U matrix
@@ -133,7 +133,6 @@ h2 = (dth2^2)*h211 + (dth1*dth2)*(h212 + h221) + (dth2^2)*h222;
 h = simplify([h1; h2]);
 
 %% Gravity term, C term
-n = 2;
 % syms r1 r2 Iz1 Iz2
 syms g
 r11 = [-(L1-r1); 0; 0; 1];
