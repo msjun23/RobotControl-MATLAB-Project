@@ -76,11 +76,11 @@ if (flag_sim == 1)
             ddX_d = (dX_d - [sim_dX_x_d(n-1); sim_dX_y_d(n-1)])./dt;
         end
         % Get dynamics
-        J = GetJacobian_two_link(q(1), q(2));                % (2x2)
+        J = GetJacobian_two_link(q(1), q(2));       % (2x2)
         dJ = (J - pre_J)/dt;                        % (2x2)
         pre_J = J;
         
-        X = GetKinematics_two_link(q(1), q(2));              % (2x1)
+        X = GetKinematics_two_link(q(1), q(2));     % (2x1)
         dX = J*dq;                                  % (2x1)
         D = GetInertia_two_link(q(1), q(2));
         H = GetCoriolis_two_link(q(1), q(2), dq(1), dq(2));
