@@ -40,6 +40,7 @@ ddq_d = 0;              % [rad/s^2], target angular acceleration
 Wn = 20;                % [rad/s], natural frequency
 Kp = Wn^2;              % [Nm/rad], propotional gain
 Kv = 2*Wn;              % [Nm*s/rad], derivative gain
+Ki = Wn;              % [Nm/rad], integration gain
 
 %% Simulation
 if (flag_sim == 1)
@@ -66,8 +67,8 @@ if (flag_sim == 1)
         % Get dynamics
         G = GetGravity(q);
         % Controller
-        tau = ddq_d + Kv*(dq_d - dq) + Kp*(q_d - q);
-        tq_ctrl = I*tau + G*0.8;
+        u = ddq_d + Kv*(dq_d - dq) + Kp*(q_d - q) + Ki*(q_d - q)*dt;
+        tq_ctrl = I*u + G*0.8;
         % Robot model
         % Inverse dynamics
         tau = tq_ctrl;

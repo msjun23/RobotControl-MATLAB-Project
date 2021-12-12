@@ -47,6 +47,7 @@ tau = [tau1; tau2; tau3];   % [Nm], control turque
 Wn = 20;                % [rad/s], natural frequency
 Kp = Wn^2;              % [Nm/rad], propotional gain
 Kv = 2*Wn;              % [Nm*s/rad], derivative gain
+Ki = Wn/2;              % [Nm/rad], integration gain
 
 %% Simulation
 if (flag_sim == 1)
@@ -91,7 +92,7 @@ if (flag_sim == 1)
         G = GetGravity_three_link(q(1), q(2), q(3));                        % (3x1)
         
         % Controller
-        u = ddX_d + Kp*(X_d - X) + Kv*(dX_d - dX);  % (2x1)
+        u = ddX_d + Kv*(dX_d - dX) + Kp*(X_d - X) + Ki*(X_d - X)*dt;  % (2x1)
         ddq_ref = J\(u - dJ*dq);                    % (2x1)
         tq_ctrl = D*ddq_ref + H + G*0.8;            % (3x1)
         %tq_ctrl = G;
