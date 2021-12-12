@@ -47,6 +47,9 @@ if (flag_sim == 1)
     n = 1;
     for time = st:dt:ft
         % Set target trajectory
+        cmd = sprintf("loading... %2.2f%%", time/ft*100);
+        clc
+        disp(cmd);
         if (time < 1)
             q_d = init_q;
             dq_d = 0.0;
