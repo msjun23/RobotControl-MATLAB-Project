@@ -66,19 +66,19 @@ if (flag_sim == 1)
             ddX_d = [0; 0];
         elseif (time < 2.0)
             X_d(1) = init_X(1);
-            if (X_d(2) < init_X(2)+0.2)             % Target pos
-                X_d(2) = X_d(2) + (0.2/0.5)*dt;     % Target vel
+            if (X_d(2) < init_X(2)+0.1)             % Target pos
+                X_d(2) = X_d(2) + (0.1/0.5)*dt;     % Target vel
             else
-                X_d(2) = init_X(2) + 0.2;
+                X_d(2) = init_X(2) + 0.1;
             end
             dX_d = (X_d - [sim_X_x_d(n-1); sim_X_y_d(n-1)])./dt;
             ddX_d = (dX_d - [sim_dX_x_d(n-1); sim_dX_y_d(n-1)])./dt;
         else
-            X_d = [0.2*sin((2*pi*sin_t)/2) + init_X(1);
-                   0.2*cos((2*pi*sin_t)/2) + init_X(2)];                % (2x1)
+            X_d = [0.1*sin((2*pi*sin_t)) + init_X(1);
+                   0.1*cos((2*pi*sin_t)) + init_X(2)];
             sin_t = sin_t + dt;
-            dX_d = (X_d - [sim_X_x_d(n-1); sim_X_y_d(n-1)])./dt;        % (2x1)
-            ddX_d = (dX_d - [sim_dX_x_d(n-1); sim_dX_y_d(n-1)])./dt;    % (2x1)
+            dX_d = (X_d - [sim_X_x_d(n-1); sim_X_y_d(n-1)])./dt;
+            ddX_d = (dX_d - [sim_dX_x_d(n-1); sim_dX_y_d(n-1)])./dt;
         end
         % Get dynamics
         J = GetJacobian_three_link(q(1), q(2), q(3));	% (2x3)
@@ -159,7 +159,7 @@ if (flag_draw == 1)
         p2 = plot(Px2, Py2, '-or', 'Linewidth', linewidth_current);
         p3 = plot(Px3, Py3, '-og', 'Linewidth', linewidth_current);
         
-        axis([-1.0 1.0 -1.6 0.4]);
+        axis([-0.6 1.0 -1.4 0.4]);
         grid on;
         xlabel('X-axis (m)', 'fontsize', font_size_label);
         ylabel('Y-axis (m)', 'fontsize', font_size_label);
