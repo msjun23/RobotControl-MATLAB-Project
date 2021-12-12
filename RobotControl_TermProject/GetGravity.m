@@ -1,5 +1,5 @@
 %% Define
-function G = GetGravity(th)
-global I g L;
+function G = GetGravity(q)
+global g L;
 
-G = g/L*sin(th);
+G = g/L*sin(q);
