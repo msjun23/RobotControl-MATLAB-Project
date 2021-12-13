@@ -9,7 +9,7 @@ syms th1 th2 th3 dth1 dth2 dth3 ddth1 ddth2 ddth3
 syms g
 syms tau1 tau2 tau3
 
-dth = [dth1 dth2 dth3];
+dth = [dth1 dth2 dth3];         % Each joint angle
 
 % Inertia of first body
 I1xx = 0;
@@ -30,9 +30,10 @@ I3zz = Iz3;
 d1 = 0;     d2 = 0;     d3 = 0;
 a1 = L1;    a2 = L2;    a3 = L3;
 al1 = 0;    al2 = 0;    al3 = 0;
-DH = [th1, d1, a1, al1;
-      th2, d2, a2, al2;
-      th3, d3, a3, al3];
+% DH parameter matrix is as follows
+% DH = [th1, d1, a1, al1;
+%       th2, d2, a2, al2;
+%       th3, d3, a3, al3];
 
 % Function HT for get Homogeneous Transformation
 T01 = HT(th1, d1, a1, al1);
@@ -85,7 +86,7 @@ J3(1, 4) = -m3 * (L3 - r3);
 J3(4, 1) = J3(1, 4);
 J3(4, 4) = m3;
 
-%% Inertia matrix, D term
+%% Inertia term, D term
 % 3-DOF -> n=3
 D11 = trace(U11 * J1 * U11.')...    % i=1, k=1, j=1
     + trace(U21 * J2 * U21.')...    % i=1, k=1, j=2
@@ -113,7 +114,7 @@ M = [M11 M12 M13;
      M21 M22 M23;
      M31 M32 M33];
 
-%% Coriolis & Centrifugal matrix
+%% U matrices for get Coriolis & Centrifugal matrix
 % 3-DOF -> n=3
 U111 = Q1 * Q1 * T01;       % i=1, j=1, k=1
 U112 = zeros(4, 4);         % i=1, j=1, k=2
@@ -145,7 +146,7 @@ U331 = Q1 * T02 * Q3 * T23;         % i=3, j=3, k=1
 U332 = T01 * Q2 * T12 * Q3 * T23;   % i=3, j=3, k=2
 U333 = T02 * Q3 * Q3 * T23;         % i=3, j=3, k=3
 
-%% h term
+%% Coriolis term, H term
 % 3-DOF -> n=3
 % Coriolis & Centrifugal term of first link
 h111 = trace(U111 * J1 * U11.')...      % i=1, k=1, m=1, j=1
@@ -216,12 +217,15 @@ for k=1:3
     end
 end
 
-h = simplify([h1; h2; h3]);
+H = simplify([h1; h2; h3]);
 
-%% Gravity term, C term
+%% Gravity term, G term
+% Center of mass for each joint
 r11 = [-(L1-r1); 0; 0; 1];
 r22 = [-(L2-r2); 0; 0; 1];
 r33 = [-(L3-r3); 0; 0; 1];
+
+% Gravity vector
 gv = [0 -g 0 0];
 
 G1 = -(m1 * gv * U11 * r11 + ...        % i=1, j=1
@@ -247,7 +251,7 @@ Iz3 = 1/3 * m3 * L3^2;
 % [tau1; tau2; tau3] = M * [ddth1; ddth2; ddth3] + h + G;
 % [ddth1; ddth2; tau3] = inv(M) * ([tau1; tau2; tau3] - h - G);
 
-ddth = inv(M) * ([tau1; tau2; tau3] - h - G);
+ddth = inv(M) * ([tau1; tau2; tau3] - H - G);
 
 %% Define three_link.m function
 dydt = simplify([dth1; ddth(1); dth2; ddth(2); dth3; ddth(3)]);

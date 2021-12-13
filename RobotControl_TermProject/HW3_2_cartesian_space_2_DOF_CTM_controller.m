@@ -40,13 +40,13 @@ ddX_d = [0; 0];                         % [m/s^2], target end-effector accelerat
 
 tau1 = 0.0;             % [Nm], control turque 1
 tau2 = 0.0;             % [Nm], control turque 2
-tau = [tau1; tau2];      % [Nm], control turque
+tau = [tau1; tau2];     % [Nm], control turque
 
 % Controller gain
 Wn = 20;                % [rad/s], natural frequency
-Kp = Wn^2;              % [Nm/rad], propotional gain
-Kv = 2*Wn;              % [Nm*s/rad], derivative gain
-Ki = Wn/2;              % [Nm/rad], integration gain
+Kp = Wn^2;              % propotional gain
+Kv = 2*Wn;              % derivative gain
+Ki = 0;              % integration gain
 
 %% Simulation
 if (flag_sim == 1)
@@ -56,14 +56,19 @@ if (flag_sim == 1)
     pre_J = 0;
     for time = st:dt:ft
         % Set target trajectory
+        % Print loading message
         cmd = sprintf("loading... %2.2f%%", time/ft*100);
         clc
         disp(cmd);
+        
         if (time < 1.0)
+            % Waiting for 1.0s
             X_d = init_X;
             dX_d = [0; 0];
             ddX_d = [0; 0];
         elseif (time < 2.0)
+            % Move to starting position for 0.5s
+            % Stay 0.5s
             X_d(1) = init_X(1);
             if (X_d(2) < init_X(2)+0.1)             % Target pos
                 X_d(2) = X_d(2) + (0.1/0.5)*dt;     % Target vel
@@ -73,6 +78,7 @@ if (flag_sim == 1)
             dX_d = (X_d - [sim_X_x_d(n-1); sim_X_y_d(n-1)])./dt;
             ddX_d = (dX_d - [sim_dX_x_d(n-1); sim_dX_y_d(n-1)])./dt;
         else
+            % Draw a circle every second with the end-effector
             X_d = [0.1*sin((2*pi*sin_t)) + init_X(1);
                    0.1*cos((2*pi*sin_t)) + init_X(2)];
             sin_t = sin_t + dt;
@@ -80,28 +86,32 @@ if (flag_sim == 1)
             ddX_d = (dX_d - [sim_dX_x_d(n-1); sim_dX_y_d(n-1)])./dt;
         end
         % Get dynamics
-        J = GetJacobian_two_link(q(1), q(2));       % (2x2)
-        dJ = (J - pre_J)/dt;                        % (2x2)
+        J = GetJacobian_two_link(q(1), q(2));       % (2x2), Get two link Jacobian matrix
+        dJ = (J - pre_J)/dt;                        % (2x2), Differential of Jacobian
         pre_J = J;
         
-        X = GetKinematics_two_link(q(1), q(2));     % (2x1)
+        X = GetKinematics_two_link(q(1), q(2));     % (2x1), Get two link Kinematics
         dX = J*dq;                                  % (2x1)
-        D = GetInertia_two_link(q(1), q(2));
-        H = GetCoriolis_two_link(q(1), q(2), dq(1), dq(2));
-        G = GetGravity_two_link(q(1), q(2));
+        D = GetInertia_two_link(q(1), q(2));                % Get Inertia term, D term
+        H = GetCoriolis_two_link(q(1), q(2), dq(1), dq(2)); % Get Coriolis term, H term
+        G = GetGravity_two_link(q(1), q(2));                % Get Gravity term, G term
         
         % Controller
         u = ddX_d + Kv*(dX_d - dX) + Kp*(X_d - X) + Ki*(X_d - X)*dt;  % (2x1)
         ddq_ref = inv(J)*(u - dJ*dq);               % (2x1)
-        tq_ctrl = D*ddq_ref + H + G*0.8;
+        tq_ctrl = D*ddq_ref + H + G*0.8;            % (2x1), torque for each link
         
         % Robot model
         % Inverse dynamics
         tau = tq_ctrl;
         tau1 = tau(1);
         tau2 = tau(2);
+        
+        % Return the dynamics of each link
         [t, y] = ode45('two_link', [0 dt], [q(1); dq(1); q(2); dq(2)]);
         index = length(y);
+        
+        % Update dynamics of each link
         q = [y(index, 1); y(index, 3)];
         dq = [y(index, 2); y(index, 4)];
         
@@ -158,16 +168,17 @@ if (flag_draw == 1)
         
         n = 1;
         for (time = st:dt:ft)
+            % Print run time
             cmd = sprintf("Time: %2.2f", time);
             clc
             disp(cmd);  
             
-            q1 = sim_q1(n);
-            q2 = sim_q2(n);
-            x1 = L1*cos(q1);
-            y1 = L1*sin(q1);
-            x2 = L2*cos(q1+q2);
-            y2 = L2*sin(q1+q2);
+            q1 = sim_q1(n);                 % [deg], joint 1 angle
+            q2 = sim_q2(n);                 % [deg], joint 2 angle
+            x1 = L1*cos(q1);                % [m], joint 1 X-axis position
+            y1 = L1*sin(q1);                % [m], joint 1 Y-axis position
+            x2 = L2*cos(q1+q2);             % [m], joint 2 X-axis position
+            y2 = L2*sin(q1+q2);             % [m], joint 2 Y-axis position
             
             Px1 = [0 x1];       Py1 = [0 y1];
             Px2 = [x1 x1+x2];   Py2 = [y1 y1+y2];

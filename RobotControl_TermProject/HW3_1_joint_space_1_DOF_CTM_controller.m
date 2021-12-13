@@ -38,9 +38,10 @@ ddq_d = 0;              % [rad/s^2], target angular acceleration
 
 % Controller gain
 Wn = 20;                % [rad/s], natural frequency
-Kp = Wn^2;              % [Nm/rad], propotional gain
-Kv = 2*Wn;              % [Nm*s/rad], derivative gain
-Ki = 20;              % [Nm/rad], integration gain
+Kp = Wn^2;              % propotional gain
+Kv = 2*Wn;              % derivative gain
+Ki = 10;              % integration gain
+gain_var = {'Wn: ', Wn ,'y = sin(x)'};
 
 %% Simulation
 if (flag_sim == 1)
@@ -48,19 +49,25 @@ if (flag_sim == 1)
     n = 1;
     for time = st:dt:ft
         % Set target trajectory
+        % Print loading message
         cmd = sprintf("loading... %2.2f%%", time/ft*100);
         clc
         disp(cmd);
+        
         if (time < 1)
+            % Waiting for 1.0s
             q_d = init_q;
             dq_d = 0.0;
             ddq_d = 0.0;
         else
+            % Rotate from 0 deg to 90 deg
             if (q_d < 90*pi/180)
                 q_d = q_d + (30*pi/180)*dt;
             else
+                % Stay 90 deg
                 q_d = 90*pi/180;
             end
+            % Stay angular velocity to 30 deg/s
             dq_d = (q_d - sim_q_d(n-1))/dt;
             ddq_d = (dq_d - sim_dq_d(n-1))/dt;
         end
@@ -72,8 +79,12 @@ if (flag_sim == 1)
         % Robot model
         % Inverse dynamics
         tau = tq_ctrl;
+        
+        % Return the dynamics of each link
         [t, y] = ode45('one_link_ex', [0 dt], [q; dq]);
         index = length(y);
+        
+        % Update dynamics of each link
         q = y(index, 1);
         dq = y(index, 2);
         
@@ -99,6 +110,7 @@ if (flag_draw == 1)
         % save as gif
         filename = 'HW3_1_joint_sapce_1_DOF_CTM_PID_controller.gif';
         
+        % Init robot position
         init_x = L*sin(init_q);
         init_y = -L*cos(init_q);
         
@@ -116,9 +128,11 @@ if (flag_draw == 1)
         
         n = 1;
         for (time = st:dt:ft)
+            % Print run time
             cmd = sprintf("Time: %2.2f", time);
             clc
-            disp(cmd);  
+            disp(cmd);
+            
             q = sim_q(n);
             x = L*sin(q);   y = -L*cos(q);
             Px = [0, x];    Py = [0, y];
