@@ -189,6 +189,7 @@ if (flag_draw == 1)
             drawnow
             n = n + 1;
             
+            % save as gif
             frame = getframe(FG1);
             img = frame2im(frame);
             [imind, cm] = rgb2ind(img, 256);
@@ -214,13 +215,11 @@ if (flag_draw == 1)
         hold on;
         
         axis([st ft -1.25 1]);
-        xticks([st:1:ft]);
-        yticks([-1:0.25:1]);
         grid on;
         
         xlabel('time (s)', 'fontsize', font_size_label);
         ylabel('Position (m)', 'fontsize', font_size_label);
-        title('Cartesian Space PD CTM Controller', 'fontsize', font_size_title);
+        title('Cartesian Space PID CTM Controller', 'fontsize', font_size_title);
         legend({'tar_x', 'tar_y', 'cur_x', 'cur_y'}, 'location', 'best', 'orientation', 'horizontal', 'fontsize', 15);
         
         % Draw velocity
@@ -236,13 +235,11 @@ if (flag_draw == 1)
         hold on;
         
         axis([st ft -1.25 1.25]);
-        xticks([st:1:ft]);
-        yticks([-1.25:0.25:1.25]);
         grid on;
         
         xlabel('time (s)', 'fontsize', font_size_label);
         ylabel('Velocity (m/s)', 'fontsize', font_size_label);
-        title('Cartesian Space PD CTM Controller', 'fontsize', font_size_title);
+        title('Cartesian Space PID CTM Controller', 'fontsize', font_size_title);
         legend({'tar_{dx}', 'tar_{dy}', 'cur_{dx}', 'cur_{dy}'}, 'location', 'best', 'orientation', 'horizontal', 'fontsize', 15);
     end
 end

@@ -26,7 +26,7 @@ L = 1.0000;             % [m], link length
 I = (m*L^2)/3;          % [kgm^2], link inertia
 tau = 0.0000;           % [Nm], control torque
 
-init_q = 0;          % [rad], init joint angle
+init_q = 0;             % [rad], init joint angle
 init_dq = 0.00;         % [rad/s], init angular velocity
 q = init_q;             % [rad], current joint angle
 dq = init_dq;           % [rad/s], current angular velocity
@@ -40,7 +40,7 @@ ddq_d = 0;              % [rad/s^2], target angular acceleration
 Wn = 20;                % [rad/s], natural frequency
 Kp = Wn^2;              % [Nm/rad], propotional gain
 Kv = 2*Wn;              % [Nm*s/rad], derivative gain
-Ki = 0;              % [Nm/rad], integration gain
+Ki = 20;              % [Nm/rad], integration gain
 
 %% Simulation
 if (flag_sim == 1)
@@ -126,6 +126,7 @@ if (flag_draw == 1)
             drawnow
             n = n + 1;
             
+            % save as gif
             frame = getframe(FG1);
             img = frame2im(frame);
             [imind, cm] = rgb2ind(img, 256);
@@ -146,13 +147,11 @@ if (flag_draw == 1)
         hold on;
         
         axis([st ft 0 120]);
-        xticks([st:1:ft]);
-        yticks([0:45:90]);
         grid on;
         
         xlabel('time (s)', 'fontsize', font_size_label);
         ylabel('Angle (deg)', 'fontsize', font_size_label);
-        title('Joint Space PD CTM Controller', 'fontsize', font_size_title);
+        title('Joint Space PID CTM Controller', 'fontsize', font_size_title);
         legend('Desired', 'Current');
         
         % Draw angular velocity
@@ -163,13 +162,11 @@ if (flag_draw == 1)
         hold on;
         
         axis([st ft -90 90]);
-        xticks([st:1:ft]);
-        yticks([-60 0 45/2 60]);
         grid on;
         
         xlabel('time (s)', 'fontsize', font_size_label);
         ylabel('Velocity (deg/s)', 'fontsize', font_size_label);
-        title('Joint Space PD CTM Controller', 'fontsize', font_size_title);
+        title('Joint Space PID CTM Controller', 'fontsize', font_size_title);
         legend('Desired', 'Current');
     end
 end
