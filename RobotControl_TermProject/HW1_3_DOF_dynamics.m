@@ -64,7 +64,7 @@ U31 = Q1 * T03;             % i=3, j=1
 U32 = T01 * Q2 * T13;       % i=3, j=2
 U33 = T02 * Q3 * T23;       % i=3, j=3
 
-%% Kinetic energy of link i, Pseudo-inverse
+%% Kinetic energy of link i, Pseudo-inertia
 J1(1, 1) = (-I1xx + I1yy + I1zz) / 2;
 J1(2, 2) = ( I1xx - I1yy + I1zz) / 2;
 J1(3, 3) = ( I1xx + I1yy - I1zz) / 2;
