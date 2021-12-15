@@ -28,7 +28,7 @@ P = eye(10);                    % P gain for kalman filter
 u = [0; 0];
 
 data = [];                      % Data stack
-data2 = [];                      % Data stack
+data2 = [];                     % Data stack
 time = [];                      % Timer stack
 
 %% Simulation
