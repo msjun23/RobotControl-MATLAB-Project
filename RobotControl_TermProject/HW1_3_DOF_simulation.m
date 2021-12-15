@@ -3,7 +3,7 @@ clc
 clear all
 close all
 
-%% 2-DOF Simulation
+%% 3-DOF Simulation
 global Iz1 Iz2 Iz3 L1 L2 L3 g m1 m2 m3 r1 r2 r3 tau1 tau2 tau3
 L1 = 0.5; L2 = 0.5; L3 = 0.5;           % [m], link length
 r1 = 0.1; r2 = 0.1; r3 = 0.1;           % [m], center of mass
