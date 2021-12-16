@@ -44,7 +44,7 @@ Wn = 20;                % [rad/s], natural frequency
 Kp = Wn^2;              % proportional gain
 Kv = 2*Wn;              % derivative gain
 Ki = 0;                 % integration gain
-%Ki = 250;                % integration gain
+Ki = 250;               % integration gain
 
 %% Simulation
 if (flag_sim == 1)
@@ -113,7 +113,7 @@ if (flag_draw == 1)
     if (flag_draw_robot == 1)
         % Draw robot
         % save as gif
-        filename = 'HW3_1_joint_sapce_1_DOF_CTM_PID_controller.gif';
+        filename = 'HW3_1_joint_space_1_DOF_CTM_PID_controller.gif';
         
         % Init robot position
         init_x = L*sin(init_q);
