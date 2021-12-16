@@ -32,16 +32,19 @@ q = init_q;             % [rad], current joint angle
 dq = init_dq;           % [rad/s], current angular velocity
 
 % Target position parameters
-q_d = init_q;           % [rad], target joint angle
+q_d = init_q;           % [rad], target joint angle 
 dq_d = 0;               % [rad/s], target angular velocity
 ddq_d = 0;              % [rad/s^2], target angular acceleration
+
+% For Integration term
+q_err_sum = 0;          % variable for joint error sum
 
 % Controller gain
 Wn = 20;                % [rad/s], natural frequency
 Kp = Wn^2;              % propotional gain
 Kv = 2*Wn;              % derivative gain
-Ki = 10;              % integration gain
-gain_var = {'Wn: ', Wn ,'y = sin(x)'};
+Ki = 0;                 % integration gain
+Ki = 600;            % integration gain
 
 %% Simulation
 if (flag_sim == 1)
@@ -74,8 +77,11 @@ if (flag_sim == 1)
         % Get dynamics
         G = GetGravity(q);
         % Controller
-        u = ddq_d + Kv*(dq_d - dq) + Kp*(q_d - q) + Ki*(q_d - q)*dt;
-        tq_ctrl = I*u + G*0.8;
+        q_err_sum = q_err_sum + (q_d-q)*dt;                         % Integration term
+        u = ddq_d + Kv*(dq_d - dq) + Kp*(q_d - q) + Ki*q_err_sum;	% PID Controller
+        gravity_err = 1.5*abs(cos(5*time));                         % Gravity compensation error
+        disturbance = 1.5*sin(3*time);                              % Disturbance
+        tq_ctrl = I*u + G*gravity_err + disturbance;                % Torque for each joint
         % Robot model
         % Inverse dynamics
         tau = tq_ctrl;

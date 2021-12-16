@@ -38,6 +38,9 @@ X_d = init_X;                                           % [m], target end-effect
 dX_d = [0; 0; 0];                                       % [m/s], target end-effector velocity
 ddX_d = [0; 0; 0];                                      % [m/s^2], target end-effector acceleration
 
+% For Integration term
+X_err_sum = 0;              % variable for joint error sum
+
 tau1 = 0.0;                 % [Nm], control turque 1
 tau2 = 0.0;                 % [Nm], control turque 2
 tau3 = 0.0;                 % [Nm], control turque 3
@@ -47,7 +50,8 @@ tau = [tau1; tau2; tau3];   % [Nm], control turque
 Wn = 20;                % [rad/s], natural frequency
 Kp = Wn^2;              % propotional gain
 Kv = 2*Wn;              % derivative gain
-Ki = 0;              % integration gain
+Ki = 0;                 % integration gain
+Ki = 100;            % integration gain
 
 %% Simulation
 if (flag_sim == 1)
@@ -98,9 +102,12 @@ if (flag_sim == 1)
         G = GetGravity_three_link(q(1), q(2), q(3));                        % Get Gravity term, G term
         
         % Controller
-        u = ddX_d + Kv*(dX_d - dX) + Kp*(X_d - X) + Ki*(X_d - X)*dt;  % (2x1)
-        ddq_ref = J\(u - dJ*dq);                    % (2x1)
-        tq_ctrl = D*ddq_ref + H + G*0.8;            % (3x1), torque for each link
+        X_err_sum = X_err_sum + (X_d-X)*dt;                         % Integration term
+        u = ddX_d + Kv*(dX_d - dX) + Kp*(X_d - X) + Ki*X_err_sum;	% PID Controller
+        ddq_ref = J\(u - dJ*dq);                                    % (2x1)
+        gravity_err = 1.5*abs(cos(5*time));                         % Gravity compensation error
+        disturbance = 1.5*sin(3*time);                              % Disturbance
+        tq_ctrl = D*ddq_ref + H + G*gravity_err;      % (3x1), Torque for each link
         
         % Robot model
         % Inverse dynamics
