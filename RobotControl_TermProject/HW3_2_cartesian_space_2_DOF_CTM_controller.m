@@ -47,10 +47,10 @@ tau = [tau1; tau2];     % [Nm], control turque
 
 % Controller gain
 Wn = 20;                % [rad/s], natural frequency
-Kp = Wn^2;              % propotional gain
+Kp = Wn^2;              % proportional gain
 Kv = 2*Wn;              % derivative gain
 Ki = 0;                 % integration gain
-%Ki = 7000;              % integration gain
+Ki = 700;              % integration gain
 
 %% Simulation
 if (flag_sim == 1)
@@ -105,8 +105,7 @@ if (flag_sim == 1)
         u = ddX_d + Kv*(dX_d - dX) + Kp*(X_d - X) + Ki*X_err_sum;   % PID Controller
         ddq_ref = inv(J)*(u - dJ*dq);                               % (2x1)
         gravity_err = 1.5*abs(cos(5*time));                         % Gravity compensation error
-        disturbance = 1.5*sin(3*time);                              % Disturbance
-        tq_ctrl = D*ddq_ref + H + G*gravity_err + disturbance;      % (2x1), Torque for each link
+        tq_ctrl = D*ddq_ref + H + G*gravity_err;                    % (2x1), Torque for each link
         
         % Robot model
         % Inverse dynamics

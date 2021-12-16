@@ -41,10 +41,10 @@ q_err_sum = 0;          % variable for joint error sum
 
 % Controller gain
 Wn = 20;                % [rad/s], natural frequency
-Kp = Wn^2;              % propotional gain
+Kp = Wn^2;              % proportional gain
 Kv = 2*Wn;              % derivative gain
 Ki = 0;                 % integration gain
-Ki = 600;            % integration gain
+%Ki = 250;                % integration gain
 
 %% Simulation
 if (flag_sim == 1)
@@ -79,9 +79,8 @@ if (flag_sim == 1)
         % Controller
         q_err_sum = q_err_sum + (q_d-q)*dt;                         % Integration term
         u = ddq_d + Kv*(dq_d - dq) + Kp*(q_d - q) + Ki*q_err_sum;	% PID Controller
-        gravity_err = 1.5*abs(cos(5*time));                         % Gravity compensation error
-        disturbance = 1.5*sin(3*time);                              % Disturbance
-        tq_ctrl = I*u + G*gravity_err + disturbance;                % Torque for each joint
+        gravity_err = 1.2;                                          % Gravity compensation error
+        tq_ctrl = I*u + G*gravity_err;                              % Torque for each joint
         % Robot model
         % Inverse dynamics
         tau = tq_ctrl;
@@ -147,14 +146,14 @@ if (flag_draw == 1)
             n = n + 1;
             
             % save as gif
-            frame = getframe(FG1);
-            img = frame2im(frame);
-            [imind, cm] = rgb2ind(img, 256);
-            if time==0
-                imwrite(imind, cm, filename, 'gif', 'Loopcount', inf, 'DelayTime', 1/60);
-            else
-                imwrite(imind, cm, filename, 'gif', 'WriteMode', 'append', 'DelayTime', 1/60);
-            end
+%             frame = getframe(FG1);
+%             img = frame2im(frame);
+%             [imind, cm] = rgb2ind(img, 256);
+%             if time==0
+%                 imwrite(imind, cm, filename, 'gif', 'Loopcount', inf, 'DelayTime', 1/60);
+%             else
+%                 imwrite(imind, cm, filename, 'gif', 'WriteMode', 'append', 'DelayTime', 1/60);
+%             end
         end
     end
     
