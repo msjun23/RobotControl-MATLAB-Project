@@ -131,10 +131,10 @@ if (flag_sim == 1)
         sim_X_y(n) = X(2);          % [m]
         sim_dX_x(n) = dX(1);        % [m/s]
         sim_dX_y(n) = dX(2);        % [m/s]
-        sim_X_x_d(n) = X_d(1);      % [m]
-        sim_X_y_d(n) = X_d(2);      % [m]
-        sim_dX_x_d(n) = dX_d(1);    % [m/s]
-        sim_dX_y_d(n) = dX_d(2);    % [m/s]
+        sim_X_x_d(n) = X_d(1);      % [m], target value
+        sim_X_y_d(n) = X_d(2);      % [m], target value
+        sim_dX_x_d(n) = dX_d(1);    % [m/s], target value
+        sim_dX_y_d(n) = dX_d(2);    % [m/s], target value
         n = n + 1;
     end
 end

@@ -97,8 +97,8 @@ if (flag_sim == 1)
         sim_time(n) = time;     % [sec]
         sim_q(n) = q;           % [rad]
         sim_dq(n) = dq;         % [rad/s]
-        sim_q_d(n) = q_d;       % [rad]
-        sim_dq_d(n) = dq_d;     % [rad/s]
+        sim_q_d(n) = q_d;       % [rad], target value
+        sim_dq_d(n) = dq_d;     % [rad/s], target value
         n = n + 1;
     end
 end
