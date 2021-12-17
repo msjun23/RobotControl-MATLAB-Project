@@ -11,7 +11,7 @@ flag_draw_robot = 1;
 flag_draw_graph = 1;
 
 % Global variable
-global Iz1 Iz2 Iz3 I L1 L2 L3 r1 r2 r3 g m1 m2 m3 tau1 tau2 tau3;
+global Iz1 Iz2 Iz3 L1 L2 L3 r1 r2 r3 g m1 m2 m3 tau1 tau2 tau3;
 
 % Simulation parameters
 dt = 0.005;             % [sec], sampling time
