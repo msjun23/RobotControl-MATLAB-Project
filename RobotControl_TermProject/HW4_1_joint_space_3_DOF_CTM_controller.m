@@ -93,6 +93,7 @@ if (flag_sim == 1)
             dq_d(3) = (q_d(3) - sim_q3_d(n-1))/dt;
             ddq_d(3) = (dq_d(3) - sim_dq3_d(n-1))/dt;
         end
+        
         % Get dynamics
         D = GetInertia_three_link(q(1), q(2), q(3));                        % Get Inertia term, D term
         G = GetGravity_three_link(q(1), q(2), q(3));                        % Get Gravity term, G term
@@ -227,7 +228,7 @@ if (flag_draw == 1)
         xlabel('time (s)', 'fontsize', font_size_label);
         ylabel('Angle (deg)', 'fontsize', font_size_label);
         title('Joint Space PID CTM Controller', 'fontsize', font_size_title);
-        legend('tar_{q1}', 'cur_{q1}', 'tar_{q2}', 'cur_{q2}', 'tar_{q3}', 'cur_{q3}');
+        legend('tar_{q1}', 'cur_{q1}', 'tar_{q2}', 'cur_{q2}', 'tar_{q3}', 'cur_{q3}', 'Location', 'best');
         
         % Draw angular velocity
         FG3 = figure('Color', [1 1 1]);
@@ -247,6 +248,6 @@ if (flag_draw == 1)
         xlabel('time (s)', 'fontsize', font_size_label);
         ylabel('Velocity (deg/s)', 'fontsize', font_size_label);
         title('Joint Space PID CTM Controller', 'fontsize', font_size_title);
-        legend('tar_{dq1}', 'cur_{dq1}', 'tar_{dq2}', 'cur_{dq2}', 'tar_{dq3}', 'cur_{dq3}');
+        legend('tar_{dq1}', 'cur_{dq1}', 'tar_{dq2}', 'cur_{dq2}', 'tar_{dq3}', 'cur_{dq3}', 'Location', 'best');
     end
 end

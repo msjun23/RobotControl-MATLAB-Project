@@ -51,7 +51,7 @@ Wn = 20;                % [rad/s], natural frequency
 Kp = Wn^2;              % proportional gain
 Kv = 2*Wn;              % derivative gain
 Ki = 0;                 % integration gain
-%Ki = 250;               % integration gain
+Ki = 250;               % integration gain
 
 %% Simulation
 if (flag_sim == 1)
@@ -90,6 +90,7 @@ if (flag_sim == 1)
             dX_d = (X_d - [sim_X_x_d(n-1); sim_X_y_d(n-1)])./dt;
             ddX_d = (dX_d - [sim_dX_x_d(n-1); sim_dX_y_d(n-1)])./dt;
         end
+        
         % Get dynamics
         J = GetJacobian_three_link(q(1), q(2), q(3));	% (2x3), Get two link Jacobian matrix
         dJ = (J - pre_J)/dt;                            % (2x3), Differential of Jacobian
@@ -152,7 +153,7 @@ if (flag_draw == 1)
     
     if (flag_draw_robot == 1)
         % save as gif
-        filename = 'HW4_cartesian_sapce_3_DOF_CTM_PID_controller.gif';
+        filename = 'HW4_2_cartesian_sapce_3_DOF_CTM_PID_controller.gif';
         
         % Draw robot
         x1 = L1*cos(init_q1);               % [m], joint 1 X-axis position
