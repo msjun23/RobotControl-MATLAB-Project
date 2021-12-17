@@ -51,7 +51,7 @@ Wn = 20;                % [rad/s], natural frequency
 Kp = Wn^2;              % proportional gain
 Kv = 2*Wn;              % derivative gain
 Ki = 0;                 % integration gain
-%Ki = 250;            % integration gain
+%Ki = 250;               % integration gain
 
 %% Simulation
 if (flag_sim == 1)
