@@ -40,7 +40,7 @@ U12 = zeros(4, 4);          % i=1, j=2
 U21 = Q1 * T02;             % i=2, j=1
 U22 = T01 * Q2 * T12;       % i=2, j=2
 
-%% Kinetic energy of link i, Pseudo-inverse
+%% Kinetic energy of link i, Pseudo-inertia
 J1(1, 1) = (-I1xx + I1yy + I1zz) / 2;
 J1(2, 2) = ( I1xx - I1yy + I1zz) / 2;
 J1(3, 3) = ( I1xx + I1yy - I1zz) / 2;

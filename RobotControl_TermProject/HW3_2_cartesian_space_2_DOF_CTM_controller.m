@@ -50,7 +50,7 @@ Wn = 20;                % [rad/s], natural frequency
 Kp = Wn^2;              % proportional gain
 Kv = 2*Wn;              % derivative gain
 Ki = 0;                 % integration gain
-Ki = 700;              % integration gain
+Ki = 250;              % integration gain
 
 %% Simulation
 if (flag_sim == 1)
@@ -104,7 +104,7 @@ if (flag_sim == 1)
         X_err_sum = X_err_sum + (X_d-X)*dt;                         % Integration term
         u = ddX_d + Kv*(dX_d - dX) + Kp*(X_d - X) + Ki*X_err_sum;   % PID Controller
         ddq_ref = inv(J)*(u - dJ*dq);                               % (2x1)
-        gravity_err = 1.5*abs(cos(5*time));                         % Gravity compensation error
+        gravity_err = 1.2;                                          % Gravity compensation error
         tq_ctrl = D*ddq_ref + H + G*gravity_err;                    % (2x1), Torque for each link
         
         % Robot model
@@ -149,7 +149,7 @@ if (flag_draw == 1)
     if (flag_draw_robot == 1)
         % Draw robot
         % save as gif
-        filename = 'HW3_2_cartesian_sapce_2_DOF_CTM_PID_controller.gif';
+        filename = 'HW3_2_cartesian_space_2_DOF_CTM_PID_controller.gif';
         
         x1 = L1*cos(init_q1);               % [m], joint 1 X-axis position
         y1 = L1*sin(init_q1);               % [m], joint 1 Y-axis position
@@ -194,14 +194,14 @@ if (flag_draw == 1)
             n = n + 1;
             
             % save as gif
-            frame = getframe(FG1);
-            img = frame2im(frame);
-            [imind, cm] = rgb2ind(img, 256);
-            if time==0
-                imwrite(imind, cm, filename, 'gif', 'Loopcount', inf, 'DelayTime', 1/60);
-            else
-                imwrite(imind, cm, filename, 'gif', 'WriteMode', 'append', 'DelayTime', 1/60);
-            end
+%             frame = getframe(FG1);
+%             img = frame2im(frame);
+%             [imind, cm] = rgb2ind(img, 256);
+%             if time==0
+%                 imwrite(imind, cm, filename, 'gif', 'Loopcount', inf, 'DelayTime', 1/60);
+%             else
+%                 imwrite(imind, cm, filename, 'gif', 'WriteMode', 'append', 'DelayTime', 1/60);
+%             end
         end
     end
     
