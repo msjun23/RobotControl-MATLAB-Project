@@ -30,3 +30,17 @@ You can see that every parameters are converge quickly without large overshoot. 
 ---|---|
 
 Every parameters are converge very quickly than Kalman algorithm and error is almost zero. But in the beginning, very big overshoot exists.
+
+---
+
+# 3.1 1-DOF Joint Space PID CTM Controller
+- Target position: 0 deg -> 90 deg
+- Target velocity: 30 deg/s
+- Use PID controller & Try several gain value
+
+For position controller at critically damped system, P gain $K_p$ is equal to square of system frequency $\omega_n^2$ and D gain $K_d$ is equal to $2\omega_n$($\because \zeta=1$ at critically damped system). If want to decrease steady-state error, we can add I controller.
+
+$\omega_n$
+
+## 
+<img src="/images/HW2_2-DOF_dynamics_estimation_kalman_filter.png" width="50%" height="50%"/>
