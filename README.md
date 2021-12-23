@@ -87,6 +87,6 @@ Final goal is extension of **3.1** & **3.2** to 3-DOF
 # 4.2 3-DOF Cartesian Space PID CTM Controller
 
 ## &omega;<sub>n</sub>=20, K<sub>p</sub>=&omega;<sub>n</sub><sup>2</sup>, K<sub>d</sub>=2&omega;<sub>n</sub>, K<sub>i</sub>=250
-<img src="/images/HW4_2_cartesian_space_3_DOF_CTM_PID_controller.gif" width="50%" height="50%"/><br>
+<img src="/images/HW4_2_cartesian_space_3_DOF_CTM_PID_controller_pos.gif" width="50%" height="50%"/><br>
 ![HW4_2_wn_20_ki_250_pos](/images/HW4_2_cartesian_space_3_DOF_CTM_PID_controller_pos.png) | ![HW4_2_wn_20_ki_250_vel](/images/HW4_2_cartesian_space_3_DOF_CTM_PID_controller_vel.png)
 ---|---|
