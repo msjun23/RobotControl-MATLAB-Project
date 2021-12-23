@@ -41,17 +41,17 @@ Every parameters are converge very quickly than Kalman algorithm and error is al
 For position controller at critically damped system, P gain K<sub>p</sub> is equal to square of system frequency &omega;<sub>n</sub><sup>2</sup> and D gain K<sub>d</sub> is equal to 2&omega;<sub>n</sub>(&because; &zeta;=1 at critically damped system). If want to decrease steady-state error, we can add I controller.
 
 ## 3.1.1 &omega;<sub>n</sub>=5, K<sub>p</sub>=&omega;<sub>n</sub><sup>2</sup>, K<sub>d</sub>=2&omega;<sub>n</sub>, K<sub>i</sub>=0
-![HW3_1_wn_5_ki_0](/images/HW3_1_wn_5_ki_0.gif)
+<img src="/images/HW3_1_wn_5_ki_0.gif" width="50%" height="50%"/><br>
 ![HW3_1_wn_5_ki_0_pos](/images/HW3_1_wn_5_ki_0_pos.png) | ![HW3_1_wn_5_ki_0_vel](/images/HW3_1_wn_5_ki_0_vel.png)
 ---|---|
 
 ## 3.1.2 &omega;<sub>n</sub>=20, K<sub>p</sub>=&omega;<sub>n</sub><sup>2</sup>, K<sub>d</sub>=2&omega;<sub>n</sub>, K<sub>i</sub>=0
-![HW3_1_wn_20_ki_0](/images/HW3_1_wn_20_ki_0.gif)
+<img src="/images/HW3_1_wn_20_ki_0.gif" width="50%" height="50%"/><br>
 ![HW3_1_wn_20_ki_0_pos](/images/HW3_1_wn_20_ki_0_pos.png) | ![HW3_1_wn_20_ki_0_vel](/images/HW3_1_wn_20_ki_0_vel.png)
 ---|---|
 
 ## 3.1.3 &omega;<sub>n</sub>=20, K<sub>p</sub>=&omega;<sub>n</sub><sup>2</sup>, K<sub>d</sub>=2&omega;<sub>n</sub>, K<sub>i</sub>=250
-![HW3_1_joint_space_1_DOF_CTM_PID_controller](/images/HW3_1_joint_space_1_DOF_CTM_PID_controller.gif)
+<img src="/images/HW3_1_joint_space_1_DOF_CTM_PID_controller.gif" width="50%" height="50%"/><br>
 ![HW3_1_wn_20_ki_250_pos](/images/HW3_1_joint_space_1_DOF_CTM_PID_controller_pos.png) | ![HW3_1_wn_20_ki_250_vel](/images/HW3_1_joint_space_1_DOF_CTM_PID_controller_vel.png)
 ---|---|
 
