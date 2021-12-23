@@ -72,7 +72,7 @@ Control gain is equal to **3.1**.
 ---|---|
 
 ## 3.2.3 &omega;<sub>n</sub>=20, K<sub>p</sub>=&omega;<sub>n</sub><sup>2</sup>, K<sub>d</sub>=2&omega;<sub>n</sub>, K<sub>i</sub>=250
-<img src="/images/HW3_2_cartesian_space_1_DOF_CTM_PID_controller.gif" width="50%" height="50%"/><br>
+<img src="/images/HW3_2_cartesian_space_2_DOF_CTM_PID_controller.gif" width="50%" height="50%"/><br>
 ![HW3_2_wn_20_ki_250_pos](/images/HW3_2_cartesian_space_2_DOF_CTM_PID_controller_pos.png) | ![HW3_2_wn_20_ki_250_vel](/images/HW3_2_cartesian_space_2_DOF_CTM_PID_controller_vel.png)
 ---|---|
 
