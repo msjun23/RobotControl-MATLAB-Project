@@ -55,3 +55,25 @@ For position controller at critically damped system, P gain K<sub>p</sub> is equ
 ![HW3_1_wn_20_ki_250_pos](/images/HW3_1_joint_space_1_DOF_CTM_PID_controller_pos.png) | ![HW3_1_wn_20_ki_250_vel](/images/HW3_1_joint_space_1_DOF_CTM_PID_controller_vel.png)
 ---|---|
 
+# 3.2 2-DOF Cartesian Space PID CTM Controller
+ - Target trajectory: radius-0.1m, period-1s, drawing cricle
+ - Use PID controller & Try several gain value
+
+Control gain is equal to **3.1**.
+
+## 3.2.1 &omega;<sub>n</sub>=5, K<sub>p</sub>=&omega;<sub>n</sub><sup>2</sup>, K<sub>d</sub>=2&omega;<sub>n</sub>, K<sub>i</sub>=0
+<img src="/images/HW3_2_wn_5_ki_0.gif" width="50%" height="50%"/><br>
+![HW3_2_wn_5_ki_0_pos](/images/HW3_2_wn_5_ki_0_pos.png) | ![HW3_2_wn_5_ki_0_vel](/images/HW3_2_wn_5_ki_0_vel.png)
+---|---|
+
+## 3.2.2 &omega;<sub>n</sub>=20, K<sub>p</sub>=&omega;<sub>n</sub><sup>2</sup>, K<sub>d</sub>=2&omega;<sub>n</sub>, K<sub>i</sub>=0
+<img src="/images/HW3_2_wn_20_ki_0.gif" width="50%" height="50%"/><br>
+![HW3_2_wn_20_ki_0_pos](/images/HW3_2_wn_20_ki_0_pos.png) | ![HW3_2_wn_20_ki_0_vel](/images/HW3_2_wn_20_ki_0_vel.png)
+---|---|
+
+## 3.2.3 &omega;<sub>n</sub>=20, K<sub>p</sub>=&omega;<sub>n</sub><sup>2</sup>, K<sub>d</sub>=2&omega;<sub>n</sub>, K<sub>i</sub>=250
+<img src="/images/HW3_2_cartesian_space_1_DOF_CTM_PID_controller.gif" width="50%" height="50%"/><br>
+![HW3_2_wn_20_ki_250_pos](/images/HW3_2_cartesian_space_2_DOF_CTM_PID_controller_pos.png) | ![HW3_2_wn_20_ki_250_vel](/images/HW3_2_cartesian_space_2_DOF_CTM_PID_controller_vel.png)
+---|---|
+
+
